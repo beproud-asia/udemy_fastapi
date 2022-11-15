@@ -4,6 +4,8 @@ from fastapi import HTTPException
 from bson import ObjectId 
 from database.dataAccess import db_connect
 from auth_utils import AuthJwtCsrf
+from bson import ObjectId
+
 
 MONGO_API_KEY = config('MONGO_API_KEY')
 
