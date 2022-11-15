@@ -1,8 +1,8 @@
 from decouple import config
 from typing import Union
-import motor.motor_asyncio #mongoDBとの連携
+#import motor.motor_asyncio #mongoDBとの連携
 from bson import ObjectId 
-from dataAccess import db_connect 
+from database.dataAccess import db_connect 
 
 MONGO_API_KEY = config('MONGO_API_KEY')
 
@@ -45,4 +45,27 @@ async def db_get_single_todo(id: str) ->  Union[dict, bool]:
     todo = await collection_todo.find_one({"_id": ObjectId(id)})
     if todo:
         return todo_serializer(todo)
+    return False
+
+###
+async def db_update_todo(id: str, data: dict) -> Union[dict, bool]:
+    todo = await collection_todo.find_one({"_id": ObjectId(id)})
+    if todo:
+        update_todo = await collection_todo.update_one(
+            {"_id": ObjectId(id)}, {"$set": data}
+        )
+        if (update_todo.modified_count > 0):
+            new_todo = await collection_todo.find_one({"_id": ObjectId(id)})
+            return todo_serializer(new_todo);
+    return False
+
+###
+async def db_delete_todo(id: str) -> bool:
+    todo = await collection_todo.find_one({"_id": ObjectId(id)})
+    if todo:
+        delete_todo = await collection_todo.delete_one(
+            {"_id": ObjectId(id)}
+        )
+        if (delete_todo.deleted_count > 0):
+            return True
     return False
