@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from schemas import SuccessMsg, CsrfSettings
-from routers import router
+from app.http.dtos.schemas import SuccessMsg, CsrfSettings
+from app.http.routers import router
 from fastapi_csrf_protect import CsrfProtect
 from fastapi_csrf_protect.exceptions import CsrfProtectError
 

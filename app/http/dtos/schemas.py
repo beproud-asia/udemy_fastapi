@@ -33,8 +33,5 @@ class UserInfo(BaseModel):
 class CsrfSettings(BaseModel):
     secret_key: str = CSRF_KEY
 
-class CsrfSettings(BaseModel):
-    secret_key: str = CSRF_KEY
-    
 class Csrf(BaseModel):
-    csrf_tokne: str
+    csrf_token: str

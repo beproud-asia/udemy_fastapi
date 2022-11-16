@@ -2,12 +2,12 @@
 from fastapi import APIRouter, Depends
 from fastapi import Response, Request, HTTPException
 from fastapi.encoders import jsonable_encoder
-from schemas import Todo, TodoBody, SuccessMsg
-from database.database import db_create_todo, db_get_single_todo, db_get_todos, db_update_todo, db_delete_todo
+from app.http.dtos.schemas import Todo, TodoBody, SuccessMsg
+from app.services.database import db_create_todo, db_get_single_todo, db_get_todos, db_update_todo, db_delete_todo
 from starlette.status import HTTP_201_CREATED
 from typing import List
 from fastapi_csrf_protect import CsrfProtect
-from auth_utils import AuthJwtCsrf
+from app.http.authorizations.auth_utils import AuthJwtCsrf
 
 router = APIRouter()
 auth = AuthJwtCsrf()
@@ -45,10 +45,10 @@ async def get_todos(request: Request):
 
 @router.get("/api/v1/{id}/todo", response_model=Todo)
 async def get_single_todo(request: Request, response: Response, id: str):
-    new_token, _ = auth.verify_csrf_update_jwt(request)
+    #new_token, _ = auth.verify_csrf_update_jwt(request)
     res = await db_get_single_todo(id)
-    response.set_cookie(
-        key="access_token", value=f"Bearer {new_token}", httponly=True, samesite="none", secure=True)
+    # response.set_cookie(
+    #     key="access_token", value=f"Bearer {new_token}", httponly=True, samesite="none", secure=True)
     if res:
         return res
     raise HTTPException(

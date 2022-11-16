@@ -2,8 +2,8 @@ from decouple import config
 from typing import Union
 from fastapi import HTTPException
 from bson import ObjectId 
-from database.dataAccess import db_connect
-from auth_utils import AuthJwtCsrf
+from app.dbconnects.dataAccess import db_connect
+from app.http.authorizations.auth_utils import AuthJwtCsrf
 from bson import ObjectId
 
 

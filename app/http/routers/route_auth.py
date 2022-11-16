@@ -2,9 +2,9 @@
 from fastapi import APIRouter
 from fastapi import Response, Request, Depends
 from fastapi.encoders import jsonable_encoder
-from schemas import UserBody, SuccessMsg, UserInfo, Csrf
-from database.database import db_signup, db_login
-from auth_utils import AuthJwtCsrf
+from app.http.dtos.schemas import UserBody, SuccessMsg, UserInfo, Csrf
+from app.services.database import db_signup, db_login
+from app.http.authorizations.auth_utils import AuthJwtCsrf
 from fastapi_csrf_protect import CsrfProtect
 
 router = APIRouter()
