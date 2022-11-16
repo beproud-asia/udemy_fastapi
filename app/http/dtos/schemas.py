@@ -4,16 +4,16 @@ from decouple import config
 
 CSRF_KEY = config('CSRF_KEY')
 
-
-class Todo(BaseModel):
+class BaseTodo(BaseModel):
     id: str
     title: str
     description: str
 
+class Todo(BaseTodo):
+    id: str
 
-class TodoBody(BaseModel):
-    title: str
-    description: str
+class TodoBody(BaseTodo):
+    pass
 
 
 class SuccessMsg(BaseModel):
