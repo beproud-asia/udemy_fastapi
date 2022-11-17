@@ -49,7 +49,7 @@ class AuthJwtCsrf():
         token = request.cookies.get("access_token")
         if not token:
             raise HTTPException(
-                status_code=401, detail='Not JWT exist: may not set yet or deleteds'
+                status_code=401, detail='No JWT exist: may not set yet or deleted'
             )
         _, _, value = token.partition(" ")
         subject = self.decode_jwt(value)
