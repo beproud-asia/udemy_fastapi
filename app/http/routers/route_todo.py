@@ -17,17 +17,15 @@ print("⭐router_todo⭐")
 
 
 @router.post("/api/v1/todo", response_model=Todo)
-# async def create_todo(request: Request, response: Response, data: TodoBody, csrf_protect: CsrfProtect = Depends()):
-async def create_todo(request: Request, response: Response, data: TodoBody):
-    print("⭐⭐⭐ post create_todo⭐")
-    # new_token = auth.verify_csrf_update_jwt(
-    #     request, csrf_protect, request.headers)
+async def create_todo(request: Request, response: Response, data: TodoBody, csrf_protect: CsrfProtect = Depends()):
+    new_token = auth.verify_csrf_update_jwt(
+        request, csrf_protect, request.headers)
 
     todo = jsonable_encoder(data)
     res = await db_create_todo(todo)
-    # response.status_code = HTTP_201_CREATED
-    # response.set_cookie(
-    #     key="access_token", value=f"Bearer {new_token}", httponly=True, samesite="none", secure=True)
+    response.status_code = HTTP_201_CREATED
+    response.set_cookie(
+        key="access_token", value=f"Bearer {new_token}", httponly=True, samesite="none", secure=True)
     if res:
         return res
     raise HTTPException(
@@ -63,13 +61,13 @@ async def get_single_todo(request: Request, response: Response, id: str):
 # 更新
 @router.put("/api/v1/todo/{id}", response_model=Todo)
 async def uodate_todo(request: Request, response: Response, id: str, data: TodoBody, csrf_protect: CsrfProtect = Depends()):
-    # new_token = auth.verify_csrf_update_jwt(
-    #     request, csrf_protect, request.headers)
+    new_token = auth.verify_csrf_update_jwt(
+        request, csrf_protect, request.headers)
 
     todo = jsonable_encoder(data)
     res = await db_update_todo(id, todo)
-    # response.set_cookie(
-    #     key="access_token", value=f"Bearer {new_token}", httponly=True, samesite="none", secure=True)
+    response.set_cookie(
+        key="access_token", value=f"Bearer {new_token}", httponly=True, samesite="none", secure=True)
 
     if res:
         return res
