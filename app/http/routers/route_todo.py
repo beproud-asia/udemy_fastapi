@@ -48,7 +48,7 @@ async def get_todos(request: Request):
 ###
 
 
-@router.get("/api/v1/{id}/todo", response_model=Todo)
+@router.get("/api/v1/todo/{id}", response_model=Todo)
 async def get_single_todo(request: Request, response: Response, id: str):
     new_token, _ = auth.verify_csrf_update_jwt(request)
     res = await db_get_single_todo(id)
@@ -63,7 +63,7 @@ async def get_single_todo(request: Request, response: Response, id: str):
 # 更新
 
 
-@router.put("/api/v1/{id}/todo", response_model=Todo)
+@router.put("/api/v1/todo/{id}", response_model=Todo)
 async def uodate_todo(request: Request, response: Response, id: str, data: TodoBody, csrf_protect: CsrfProtect = Depends()):
     new_token = auth.verify_csrf_update_jwt(
         request, csrf_protect, request.headers)
@@ -82,7 +82,7 @@ async def uodate_todo(request: Request, response: Response, id: str, data: TodoB
 # 削除
 
 
-@router.delete("/api/v1/{id}/todo", response_model=SuccessMsg)
+@router.delete("/api/v1/todo/{id}", response_model=SuccessMsg)
 async def delete_todo(request: Request, response: Response, id: str, csrf_protect: CsrfProtect = Depends()):
     new_token = auth.verify_csrf_update_jwt(
         request, csrf_protect, request.headers)
