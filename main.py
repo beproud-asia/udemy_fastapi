@@ -35,4 +35,4 @@ def csrf_protect_exception_handler(request: Request, exc: CsrfProtectError):
 
 @app.get("/", response_model=SuccessMsg)
 def root():
-    return {"message": "Welcom to Fast API"}
+    return {"message": "Welcom to Fast API by udemy"}
